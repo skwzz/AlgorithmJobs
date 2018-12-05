@@ -1,0 +1,86 @@
+public class bingo {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        
+        int[][] arr = new int[5][5];
+        int[] numbers = new int[25];
+        int cnt = 0;
+        int bingo = 0;
+        for(int i=0; i<arr.length; i++) {
+            for(int j=0; j<arr[0].length; j++) {
+                arr[i][j] = in.nextInt();
+            }
+        }
+        
+        
+        for(int i=0; i<numbers.length; i++) {
+            numbers[i] = in.nextInt();
+        }
+        
+        for(int num=0; num<numbers.length; num++) {
+            
+            
+            for(int i=0; i<arr.length; i++) {
+                for(int j=0; j<arr[0].length; j++) {
+                    if(numbers[num] == arr[i][j]) {
+                        arr[i][j] = 0;
+                        cnt++;
+                    }
+                    if(cnt>=12) {
+                        bingo = countBingo(arr);
+                    }
+                    if(bingo==3) {
+                        System.out.println(num+1);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    
+    public static int countBingo(int[][] arr) {
+        int value = 0;
+        int zeroCount = 0;
+        for(int i=0; i<arr.length; i++) {
+            for(int j=0; j<arr[0].length; j++) {
+                if(arr[i][j]==0) {
+                    zeroCount++;
+                }
+            }
+            if(zeroCount==5) {
+                value++;
+            }
+            zeroCount = 0;
+        }
+        for(int i=0; i<arr.length; i++) {
+            for(int j=0; j<arr[0].length; j++) {
+                if(arr[j][i]==0) {
+                    zeroCount++;
+                }
+            }
+            if(zeroCount==5) {
+                value++;
+            }
+            zeroCount = 0;
+        }
+        for(int i=0; i<arr.length; i++) {
+            if(arr[i][i]==0) {
+                zeroCount++;
+            }
+            if(zeroCount==5) {
+                value++;
+            }
+        }
+        zeroCount = 0;
+        for(int i=0; i<arr.length; i++) {
+            if(arr[i][Math.abs(i-4)]==0){
+                zeroCount++;
+            }
+            if(zeroCount==5) {
+                value++;
+            }
+        }
+        zeroCount = 0;
+        return value;
+    }
+}

@@ -1,0 +1,70 @@
+public class seat {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int a = in.nextInt();
+        int b = in.nextInt();
+        int limitNum = a*b;
+        int peopleNum = in.nextInt();
+        int[][] arr = new int[a][b];
+        int x = 0;
+        int y = 0;
+        int num = 1;
+        int mode = 1;
+        int limitMode1 = arr[0].length;
+        int limitMode2 = arr.length;
+        int limitMode3 = -1;
+        int limitMode4 = 0;
+        
+        if(peopleNum > limitNum) {
+            System.out.print(0);
+            return;
+        }
+        while(num<=limitNum) {
+            arr[x][y] = num;
+            if(mode == 1) {
+                y++;
+                if(y==limitMode1) {
+                    y--;
+                    x++;
+                    limitMode1--;
+                    mode=2;
+                }
+            }else if(mode == 2) {
+                x++;
+                if(x==limitMode2) {
+                    x--;
+                    y--;
+                    limitMode2--;
+                    mode=3;
+                }
+            }else if(mode == 3) {
+                y--;
+                if(y==limitMode3) {
+                    y++;
+                    x--;
+                    limitMode3++;
+                    mode=4;
+                }
+            }else {
+                x--;
+                if(x==limitMode4) {
+                    x++;
+                    y++;
+                    limitMode4++;
+                    mode=1;
+                }
+            }
+            num++;
+        }
+        
+        for(int i=0; i<arr.length; i++) {
+            for(int j=0; j<arr[0].length; j++) {
+                if(peopleNum==arr[i][j]) {
+                    System.out.print((i+1)+" "+(j+1));
+                    return;
+                }
+            }
+            System.out.println("");
+        }
+    }
+}

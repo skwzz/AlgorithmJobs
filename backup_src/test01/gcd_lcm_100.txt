@@ -1,0 +1,35 @@
+public class gcdlcm {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int gcd = 0;
+        int lcm = 0;
+        int a = in.nextInt();
+        int b = in.nextInt();
+        int r = 0;
+        lcm = a * b;
+        if(a<b) {
+            int temp = 0;
+            temp = a;
+            a = b;
+            b = temp;
+        }
+        
+        while(true) {
+            r = a % b;
+            if(r==0) {
+                gcd = b;
+                break;
+            }else {
+                a = b;
+                b = r;
+            }
+        }
+        lcm /= gcd;
+        System.out.println(gcd);
+        System.out.println(lcm);
+        
+        
+        
+    }
+}
+¡¿

@@ -1,0 +1,40 @@
+public class offset {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        
+        int[][] arr = new int[7][7];
+        int[] idx_i = new int[25];
+        int[] idx_j = new int[25];
+        int cnt = 0;
+        for(int i=0; i<arr.length; i++) {
+            for(int j=0; j<arr[0].length; j++) {
+                arr[i][j] = 10;
+            }
+        }
+        for(int i=1; i<arr.length-1; i++) {
+            for(int j=1; j<arr[0].length-1; j++) {
+                arr[i][j] = in.nextInt();
+            }
+        }
+        
+        for(int i=1; i<arr.length-1; i++) {
+            for(int j=1; j<arr[0].length-1; j++) {
+                if(arr[i][j]<arr[i-1][j] && arr[i][j]<arr[i+1][j] && arr[i][j]<arr[i][j-1] && arr[i][j]<arr[i][j+1]) {
+                    arr[i][j] = -1 ;
+                }
+            }
+        }
+        
+        
+        for(int i=1; i<arr.length-1; i++) {
+            for(int j=1; j<arr[0].length-1; j++) {
+                if(arr[i][j] == -1) {
+                    System.out.printf("* ");
+                }else {
+                    System.out.printf("%d ", arr[i][j]);
+                }
+            }
+            System.out.println("");
+        }
+    }
+}
