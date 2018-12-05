@@ -22,7 +22,7 @@ public class GraphEx2 {
 		
 		for(int i=0; i<ve.length; i++) {
 			
-			System.out.print((i+1)+"ì˜ ì¸ì ‘í•œ Vertex : ");
+			System.out.print((i+1)+"ÀÎÁ¢ÇÑ Vertex : ");
 			for(int j=0; j<ve[i].adjVertex.size(); j++) {
 				System.out.print(ve[i].adjVertex.get(j)+" ");
 			}
