@@ -42,7 +42,7 @@ public class GraphDFSEx1 {
 		}
 		
 		for(int i=0; i<gv.length; i++) {
-			System.out.print((i+1)+"인접한 Vertex : ");
+			System.out.print((i+1)+"Adjacent Vertex : ");
 			for(int j=0; j<gv[i].adj.size(); j++) {
 				System.out.print(gv[i].adj.get(j)+" ");
 			}
@@ -50,7 +50,7 @@ public class GraphDFSEx1 {
 		}
 		System.out.println("***********************");
 		graphDFS(gv, 0);
-		System.out.println("매무리");
+		System.out.println("Finish");
 	}
 	
 	public static void graphDFS(GraphVertex[] v, int x) {
