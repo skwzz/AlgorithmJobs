@@ -38,9 +38,28 @@ public class Basic06_2 {
 	}
 	
 	public static boolean recursiveDFS(Vertex2[] v, int x, int color) {
+		v[x].color = color;
+		
+		for(int i=0; i<v[x].adjVertex.size(); i++) {
+			int next = v[x].adjVertex.get(i);
+			if(v[next].color == 0) {
+				if(v[x].color == 1) {
+					color = 2;
+				}else if(v[x].color ==2) {
+					color = 1;
+				}
+				recursiveDFS(v, next, color);
+			}
+		}
+		
+		for(int i=0; i<v[x].adjVertex.size(); i++) {
+			int current = v[x].adjVertex.get(i);
+			if(v[x].color == v[current].color) {
+				return false;
+			}
+		}
+		
 		return true;
-		
-		
 	}
 }
 
