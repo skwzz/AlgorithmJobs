@@ -1,4 +1,4 @@
-package basic06.study;
+ package basic06.study;
 
 import java.util.ArrayList;
 import java.util.Arrays;
