@@ -1,110 +1,85 @@
 package basic06;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Basic06_3 {
-	public static ArrayList<Integer> box1 = new ArrayList<Integer>();
-	public static ArrayList<Integer> box2 = new ArrayList<Integer>();
-	
-	public static void main(String[] args) {
+	public static final int MAX = 1000;
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		Scanner in = new Scanner(System.in);
-		int vertexNum = in.nextInt();
-		int edgeNum = in.nextInt();
+		ArrayList<Integer> box1 = new ArrayList<Integer>();
+		ArrayList<Integer> box2 = new ArrayList<Integer>();
 		
-		Vertex3[] v = new Vertex3[vertexNum+1];
-
-		for(int i=1; i<v.length; i++) {
+		int vertexCnt = Integer.parseInt(st.nextToken());
+		int edgeCnt = Integer.parseInt(st.nextToken());
+		int startNum = 0;
+		
+		boolean firstCheck = false;
+		
+		Vertex3[] v = new Vertex3[MAX];
+		for(int i=0; i<v.length; i++) {
 			v[i] = new Vertex3();
 		}
 		
-		for(int i=0; i<edgeNum; i++) {
-			int a = in.nextInt();
-			int b = in.nextInt();
+		for(int i=0; i<edgeCnt; i++) {
+			st = new StringTokenizer(br.readLine());
+			int n = Integer.parseInt(st.nextToken());
+			int m = Integer.parseInt(st.nextToken());
+			if(firstCheck == false) {
+				startNum = n;
+				firstCheck = true;
+			}
+			v[n].adj.add(m);
+			v[m].adj.add(n);
 			
-			v[a].adjVertex.add(b);
-			v[b].adjVertex.add(a);
+			v[n].data = n;
+			v[m].data = m;
+			
+		}
+		for(int i=0; i<v.length; i++) {
+			if(v[i].adj.size()!=0) {
+				Collections.sort(v[i].adj);
+			}
 		}
 		
-		for(int i=1; i<v.length; i++) {
-			Collections.sort(v[i].adjVertex);
+		/*
+		for(int i=0; i<v.length; i++) {
+			if(v[i].adj.size()!=0) {
+				System.out.print(i+" VERTEX : ");
+				for(int j=0; j<v[i].adj.size(); j++) {
+					System.out.print(v[i].adj.get(j)+" ");
+				}
+				System.out.println("");
+			}
 		}
+		*/
 		
-		boolean answer = recursiveDFS(v, 1);
 		
-		if(answer) {
-			System.out.println("YES");
-		}else {
-			System.out.println("NO");
-		}
+		Basic06_3 test = new Basic06_3();
+		test.recursiveDFS(v, startNum);
 	}
 	
-	public static boolean recursiveDFS(Vertex3[] v, int x) {
-		v[x].visited = true;
-		//System.out.print(x+" ");
-		boolean flag = true;
+	public void recursiveDFS(Vertex3[] v, int num) {
+		v[num].visited = true;
 		
-		addBox(x, v[x].box_flag);
-		if(isConnected(v, x, v[x].box_flag)==true) {
-			return false;
-		}
-		for(int i=0; i<v[x].adjVertex.size(); i++) {
-			int next = v[x].adjVertex.get(i);
+		for(int i=0; i<v[num].adj.size(); i++) {
+			int next = v[num].adj.get(i);
 			if(v[next].visited == false) {
-				v[next].box_flag = v[x].box_flag == 1 ? 2 : 1;
-				flag &= recursiveDFS(v, next);
+				recursiveDFS(v, next);
 			}
-		}
-		
-		return flag;
-	}
-	
-	public static boolean isConnected(Vertex3[] v, int x, int box_flag) {
-		if(box_flag == 1) {
-			if(box1.size()==1) {
-				return false;
-			}else {
-				for(int i=0; i<v[x].adjVertex.size(); i++) {
-					int checkNum = v[x].adjVertex.get(i);
-					for(int j=0; j<box1.size()-1; j++) {
-						if(checkNum == box1.get(j)) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		
-		if(box_flag == 2) {
-			if(box2.size()==1) {
-				return false;
-			}else {
-				for(int i=0; i<v[x].adjVertex.size(); i++) {
-					int checkNum = v[x].adjVertex.get(i);
-					for(int j=0; j<box2.size()-1; j++) {
-						if(checkNum == box2.get(j)) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static void addBox(int x, int box_flag) {
-		if(box_flag == 1) {
-			box1.add(x);
-		}else {
-			box2.add(x);
 		}
 	}
 }
 
 class Vertex3{
 	boolean visited = false;
+	int data = 0;
 	int box_flag = 1;
-	ArrayList<Integer> adjVertex = new ArrayList<Integer>();
+	ArrayList<Integer> adj = new ArrayList<Integer>();
 }
